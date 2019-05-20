@@ -1,11 +1,2 @@
-# graphql-ts-server-boilerplate
+Servidor con api en graphql para manejar sesion con web tokens.
 
-* Register - Send confirmation email
-* Login
-* Forgot Password
-* Logout  
-* Cookies and Http Header
-* Authentication middleware
-* Rate limiting
-* Locking accounts
-* Testing (probably Jest)
