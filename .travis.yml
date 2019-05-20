@@ -12,13 +12,13 @@ cache:
     - node_modules
 before_script:
   - psql -c 'create database grapqhldbtest;' -U postgres
-  - root
 before_install:
   - npm update
   - sudo apt-get update
   - sudo apt-get install language-pack-es
   - sudo /etc/init.d/postgresql stop
   - sudo /etc/init.d/postgresql start 9.3
+  
 install:
   - npm install
 script:
