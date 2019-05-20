@@ -1,5 +1,5 @@
 import { ValidationError } from "yup";
-
+//xd
 export const formatYupError = (err: ValidationError) => {
   const errors: Array<{ path: string; message: string }> = [];
   err.inner.forEach((e) => {
