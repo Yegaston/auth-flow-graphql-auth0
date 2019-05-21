@@ -3,7 +3,12 @@ import { object, string } from "yup";
 import { ResolverMap } from "../../types/graphql-utils";
 import { User } from "../../entity/User";
 import { formatYupError } from "../../utils/formatYupError";
-import { duplicatedEmail, emailNotLongEnough, invalidEmail } from "./errorsMessages";
+import {
+  duplicatedEmail,
+  emailNotLongEnough,
+  invalidEmail
+} from "./errorsMessages";
+import { createConfirmEmailLink } from "../../utils/confirmedEmailLink";
 
 const schema = object().shape({
   email: string()
@@ -20,18 +25,19 @@ export const resolvers: ResolverMap = {
     bye: () => "bye"
   },
   Mutation: {
-    register: async (_, args: GQL.IRegisterOnMutationArguments) => {
-
+    register: async (
+      _,
+      args: GQL.IRegisterOnMutationArguments,
+      { redis, url }
+    ) => {
       // Validations
       try {
-        await schema.validate(args, {abortEarly: false});
-      }
-      catch (err){
-        return formatYupError(err)
-
+        await schema.validate(args, { abortEarly: false });
+      } catch (err) {
+        return formatYupError(err);
       }
 
-      const {email, password } = args;
+      const { email, password } = args;
 
       const userAlreadyExists = await User.findOne({
         where: { email },
@@ -54,6 +60,9 @@ export const resolvers: ResolverMap = {
       });
 
       await user.save();
+
+      await createConfirmEmailLink(url, user.id, redis);
+
       return null;
     }
   }
