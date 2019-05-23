@@ -3,8 +3,8 @@ import { invalidLogin, confirmEmailErr } from "./errorMessages";
 import { User } from "../../entity/User";
 import { createTypeormConn } from "../../utils/createTypeormConn";
 
-const email = "tom@gmail.com";
-const password = "jasdsad";
+const email = "tom@gsdmail.com";
+const password = "jasasdsad";
 
 const registerMutation = (e: string, p: string) => `
 mutation {
@@ -47,7 +47,7 @@ beforeAll(async () => {
 
 describe("login", () => {
   test("test  email not found", async () => {
-    loginExpectError("bob@boob.com", "whateaver", invalidLogin);
+    loginExpectError("bob@boasob.com", "whateaver", invalidLogin);
   });
 
   test("test wrong password", async () => {

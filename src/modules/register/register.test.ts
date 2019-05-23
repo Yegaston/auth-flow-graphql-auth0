@@ -9,7 +9,7 @@ import {
 import { createTypeormConn } from "../../utils/createTypeormConn";
 
 
-const email = "tom@gmail.com";
+const email = "tom@gmaiqwel.com";
 const password = "jasdsad";
 
 const mutation = (e: string, p: string) => `

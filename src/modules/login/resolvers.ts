@@ -17,24 +17,32 @@ export const resolvers: ResolverMap = {
     bye2: () => "bye"
   },
   Mutation: {
-    login: async (_, { email, password }: GQL.ILoginOnMutationArguments) => {
+    login: async (
+      _,
+      { email, password }: GQL.ILoginOnMutationArguments,
+      { session }
+    ) => {
       const user = await User.findOne({ where: { email } });
 
-			if (!user) return errorResponse;
-			
-			// Checkin if user confirm the email.
-			if(!user.confirmed){
-				return[{
-					path: "email",
-					message: confirmEmailErr 
-				}]
-			}
+      if (!user) return errorResponse;
+
+      // Checkin if user confirm the email.
+      if (!user.confirmed) {
+        return [
+          {
+            path: "email",
+            message: confirmEmailErr
+          }
+        ];
+      }
 
       const valid = await bcrypt.compare(password, user.password);
 
-			if (!valid) return errorResponse;
-			
-			return null;
+      if (!valid) return errorResponse;
+      // Login Succesfull
+      session.userId = user.id;
+
+      return null;
     }
   }
 };
