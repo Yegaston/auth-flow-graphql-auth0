@@ -20,7 +20,9 @@ export const startServer = async () => {
 
   server.express.use(
     session({
-      store: new RedisStore({}),
+      store: new RedisStore({
+        client: redis as any
+      }),
       name: "qid",
       secret: SESSION_SECRET,
       resave: false,
