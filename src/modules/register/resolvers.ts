@@ -8,7 +8,7 @@ import {
   emailNotLongEnough,
   invalidEmail
 } from "./errorsMessages";
-import { createConfirmEmailLink } from "../../utils/confirmedEmailLink";
+//import { createConfirmEmailLink } from "../../utils/confirmedEmailLink";
 
 const schema = object().shape({
   email: string()
@@ -28,7 +28,7 @@ export const resolvers: ResolverMap = {
     register: async (
       _,
       args: GQL.IRegisterOnMutationArguments,
-      { redis, url }
+      // { redis, url }
     ) => {
       // Validations
       try {
@@ -61,7 +61,7 @@ export const resolvers: ResolverMap = {
 
       await user.save();
 
-      await createConfirmEmailLink(url, user.id, redis);
+      // await createConfirmEmailLink(url, user.id, redis);
 
       return null;
     }
