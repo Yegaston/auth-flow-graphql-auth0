@@ -2,6 +2,8 @@ import { request } from "graphql-request";
 import { invalidLogin, confirmEmailErr } from "./errorMessages";
 import { User } from "../../entity/User";
 import { createTypeormConn } from "../../utils/createTypeormConn";
+import { connect } from "http2";
+import { Connection } from "typeorm";
 
 const email = "tom@gsdmail.com";
 const password = "jasasdsad";
@@ -14,8 +16,6 @@ mutation {
   }
 }
 `;
-
-
 
 const loginExpectError = async (e: string, p: string, errMsg: string) => {
   const response = await request(
@@ -41,9 +41,13 @@ mutation {
 }
 `;
 
+let conn: Connection;
 beforeAll(async () => {
-    await createTypeormConn();
-  });
+  conn = await createTypeormConn();
+});
+afterAll(async () => {
+  conn.close();
+})
 
 describe("login", () => {
   test("test  email not found", async () => {
