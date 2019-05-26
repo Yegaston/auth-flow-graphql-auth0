@@ -1,7 +1,5 @@
-# import Error from "../../shared.graphql"
-
 type User {
-  id: ID!,
+  id: ID!
   email: String!
 }
 
