@@ -19,6 +19,11 @@ beforeAll(async () => {
   userId = user.id;
 });
 
+afterAll(async () => {
+  conn.close();
+});
+
+
 test("Make sure it confirms user and clears key in redis", async () => {
   const url = await createConfirmEmailLink(
     process.env.TEST_HOST as string,
@@ -35,8 +40,4 @@ test("Make sure it confirms user and clears key in redis", async () => {
   const key = chunks[chunks.length - 1];
   const value = await redis.get(key);
   expect(value).toBeNull();
-});
-
-afterAll(async () => {
-  conn.close();
 });
